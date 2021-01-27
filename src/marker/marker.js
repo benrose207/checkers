@@ -17,7 +17,7 @@ class Marker {
     let directions;
     if (this.king) {
       directions = [[1, -1], [-1, -1], [1, 1], [-1, 1]];
-    } else if (this.color === 'r') {
+    } else if (this.color === 'Red') {
       directions = [[1, 1], [1, -1]];
     } else {
       directions = [[-1, -1], [-1, 1]];
@@ -30,13 +30,13 @@ class Marker {
       const moveSpace = currentBoard[newX][newY]
   
       if (!moveSpace) {
-        moves.push([newX, newY]);
+        moves.push(`${newX},${newY}`);
       } else if (moveSpace.color !== this.color) {
         newX += direction[0];
         newY += direction[1];
 
         if (!currentBoard[newX][newY]) {
-          moves.push([newX, newY]);
+          moves.push([`${newX},${newY}`]);
           canJump = true;
         }
       }

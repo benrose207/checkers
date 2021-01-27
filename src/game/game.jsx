@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Board from '../board/board.jsx';
 
 const Game = () => {
-  const [currentPlayer, setCurrentPlayer] = useState('r');
+  const [currentPlayer, setCurrentPlayer] = useState('Red');
 
   return (
     <main>

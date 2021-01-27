@@ -14,9 +14,9 @@ class Board {
       for (let j = 0 + offset; j < this.size; j += 2) {
         let color;
         if (i < 3) {
-          color = 'r';
+          color = 'Red';
         } else if (i > 4) {
-          color = 'b';
+          color = 'Black';
         }
 
         if (i !== 3 && i !== 4) {

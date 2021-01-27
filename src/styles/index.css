@@ -4,6 +4,44 @@
   margin: 6rem 0;
 }
 
+body {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 80px);
+  grid-template-rows: repeat(8, 80px);
+  margin: 2rem auto;
+  max-width: 640px;
+  border: 0.5px solid black;
+}
+
+.cell {
+  border: 0.5px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marker {
+  padding: 30px;
+  border-radius: 50%;
+}
+
+.Red {
+  background-color: red;
+}
+
+.Black {
+  background-color: black;
+}
+
 .move-option {
-  background-color: yellow;
+  box-shadow: 0 0 5px 5px blue;
+}
+
+.highlight {
+  box-shadow: 0 0 5px 5px green;
 }

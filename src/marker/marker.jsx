@@ -1,10 +1,9 @@
 import React from 'react';
 
-const Marker = ({ marker, canMove }) => {
+const Marker = ({ marker, canMove, selected, highlight }) => {
 
   return (
-    <div className={canMove ? 'move-option' : ''}>
-      {`${marker.color}`}
+    <div className={`marker ${highlight} ${marker.color} ${canMove && !selected ? 'move-option' : ''}`}>
     </div>
   );
 };
