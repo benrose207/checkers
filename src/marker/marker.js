@@ -10,12 +10,10 @@ class Marker {
     this.king = true;
   }
 
-  canMove(currentBoard) {
-    // depending on color and king status, determine if piece can move at all
-    // Also will need to return cells this piece could move to
-    // Need to see if it can jump anyone
+  getMoves(currentBoard) {
     let moves = [];
-
+    let canJump = false;
+  
     let directions;
     if (this.king) {
       directions = [[1, -1], [-1, -1], [1, 1], [-1, 1]];
@@ -24,19 +22,36 @@ class Marker {
     } else {
       directions = [[-1, -1], [-1, 1]];
     }
-
+  
     for (const direction of directions) {
       const [x, y] = this.pos;
-      const [newX, newY] = [x + direction[0], y + direction[1]];
+      let [newX, newY] = [x + direction[0], y + direction[1]];
       if (!this.validPos(newX, newY)) continue;
-      debugger
-      if (!currentBoard[newX][newY]) {
+      const moveSpace = currentBoard[newX][newY]
+  
+      if (!moveSpace) {
         moves.push([newX, newY]);
+      } else if (moveSpace.color !== this.color) {
+        newX += direction[0];
+        newY += direction[1];
+
+        if (!currentBoard[newX][newY]) {
+          moves.push([newX, newY]);
+          canJump = true;
+        }
       }
     }
 
+    return { moves, canJump };
+  }
+
+  canMove(currentBoard) {
+    const { moves, canJump } = this.getMoves(currentBoard);
+
     return {
       moves,
+      canJump,
+      pos: this.pos,
       canMove: moves.length > 0,
     }
   }

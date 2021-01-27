@@ -1,12 +1,10 @@
 import React from 'react';
 import './styles/index.css';
-import Board from './board/board.jsx';
+import Game from './game/game.jsx'
 
 function App() {
   return (
-    <div className="App">
-      <Board />
-    </div>
+    <Game />
   );
 }
 

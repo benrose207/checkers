@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Marker = ({ marker, board }) => {
+const Marker = ({ marker, canMove }) => {
+
   return (
-    <div>
-      {`${marker.color} - ${marker.pos} -  ${JSON.stringify(marker.canMove(board))}`}
+    <div className={canMove ? 'move-option' : ''}>
+      {`${marker.color}`}
     </div>
-  )
+  );
 };
 
 export default Marker;
