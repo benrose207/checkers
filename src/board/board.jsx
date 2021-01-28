@@ -47,9 +47,21 @@ const Board = ({ boardClass }) => {
     board[x][y] = marker;
     board[prevX][prevY] = '';
 
+    if (isJump(prevX, prevY, x, y)) handleJump(prevX, prevY, x, y);
+
     setBoard([...board]);
     setSelected(initialSelectedState);
     updateCurrentPlayer();
+  }
+
+  function isJump(prevX, prevY, x, y) {
+    return Math.abs(prevX - x) > 1 || Math.abs(prevY - y) > 1;
+  }
+
+  function handleJump(prevX, prevY, x, y) {
+    const jumpedX = (prevX + x) / 2;
+    const jumpedY = (prevY + y) / 2;
+    board[jumpedX][jumpedY] = '';
   }
   
   function handleClick(e) {

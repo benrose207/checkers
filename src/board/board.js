@@ -52,11 +52,23 @@ class Board {
     // If none can jump, then just return all moves
     if (canJump) {
       Object.keys(moves).forEach(key => {
-        if (!moves[key].canJump) delete moves[key];
+        this.resolveJumpOptions(moves, key);
       });
     }
 
     return moves;
+  }
+
+  resolveJumpOptions(moves, key) {
+    if (!moves[key].canJump) {
+      delete moves[key];
+    } else {
+      const markerMoves = moves[key].moves;
+      const pos = moves[key].pos;
+      moves[key].moves = markerMoves.filter(move => (
+        Math.abs(move[0] - pos[0]) > 1 || Math.abs(move[2] - pos[1]) > 1
+      ));
+    }
   }
 }
 
