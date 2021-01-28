@@ -36,9 +36,6 @@ class Board {
         const cell = this.board[i][j];
 
         if (cell && cell.color === color) {
-          // const cellMoveData = cell.canMove(this.board);
-          // moves.push(cellMoveData);
-          // if (cellMoveData.canJump) canJump = true;
           const cellMoveData = cell.canMove(this.board);
 
           if (cellMoveData.canMove) {
@@ -55,7 +52,6 @@ class Board {
     // Check if any of the markers can jump. If so, filter moves to only these tiles
     // If none can jump, then just return all moves
     if (canJump) {
-      // moves.filter(movePiece => movePiece.canJump === true);
       Object.keys(moves).forEach(key => {
         if (!moves[key].canJump) delete moves[key];
       });

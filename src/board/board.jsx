@@ -1,29 +1,23 @@
-import React, { useState } from 'react';
-import BoardClass from './board.js';
+import React, { useEffect, useState } from 'react';
 import Cell from '../marker/cell';
 
-const Board = ({ currentPlayer }) => {
+const Board = ({ currentPlayer, boardClass }) => {
+  const [board, setBoard] = useState(boardClass.board);
+  const [movePieces, setMovePieces] = useState({})
   const [selected, setSelected] = useState({ cell: null, message: ''});
 
-  const board = new BoardClass();
-  board.populate();
-  const movePieces = board.getMovePieces(currentPlayer);
-  
-  function handleClick(e) {
-    let targetEl;
+  useEffect(() => {
+    setMovePieces(boardClass.getMovePieces(currentPlayer));
+  }, [boardClass, currentPlayer]);
 
-    if (e.target.classList.contains('cell')) {
-      targetEl = e.target;
-    } else if (e.target.classList.contains('marker')) {
-      targetEl = e.target.parentNode;
-    } else {
-      return;
-    }
+  function isMoveSpace(targetEl, prevPos) {
+    const isHighlighted = targetEl.firstChild.classList.contains('highlight');
+    const isNotCurrentSelection = `${selected.cell.pos}` !== prevPos.join(',');
 
-    const pos = targetEl.dataset.pos.split(',');
-    const [x, y] = pos;
-    const cell = board.board[x][y];
+    return isHighlighted && isNotCurrentSelection;
+  }
 
+  function updateSelection(cell, pos) {
     if (!cell || cell.color !== currentPlayer) {
       setSelected({
         cell: null,
@@ -42,11 +36,50 @@ const Board = ({ currentPlayer }) => {
     }
   }
 
+  function move(prevX, prevY, x, y) {
+    const marker = board[prevX][prevY];
+    
+    marker.pos = [x, y];
+    board[x][y] = marker;
+    board[prevX][prevY] = '';
+
+    setBoard([...board]);
+    setSelected({ cell: null, message: '' });
+    setMovePieces(boardClass.getMovePieces(currentPlayer));
+  }
+  
+  function handleClick(e) {
+    let targetEl;
+
+    if (e.target.classList.contains('cell')) {
+      targetEl = e.target;
+    } else if (e.target.classList.contains('marker')) {
+      targetEl = e.target.parentNode;
+    } else {
+      return;
+    }
+
+    const pos = targetEl.dataset.pos.split(',');
+    const [x, y] = pos.map(idx => parseInt(idx));
+    const cell = board[x][y];
+
+    // if targetEl has class of highlight && is not the selected pos
+    if (selected.cell && isMoveSpace(targetEl, pos)) {
+      // execute 'move' function, taking in new pos, then return.
+      const [prevX, prevY] = selected.cell.pos;
+      move(prevX, prevY, x, y);
+      return
+    }
+
+    // Else perform selection update
+    updateSelection(cell, pos);
+  }
+
   return (
     <>
-      <p>{`${currentPlayer}'s turn. ${selected.message}`}</p>
+      <p>{`${currentPlayer}'s turn`}</p>
       <div className="board" onClick={handleClick}>
-        {board.board.map((row, idx1) => (
+        {board.map((row, idx1) => (
           row.map((cell, idx2) => (
             <Cell
               key={idx2}
@@ -58,6 +91,7 @@ const Board = ({ currentPlayer }) => {
           ))
         ))}
       </div>
+      <p>{selected.message}</p>
     </>
   );
 };

@@ -26,6 +26,7 @@ class Marker {
     for (const direction of directions) {
       const [x, y] = this.pos;
       let [newX, newY] = [x + direction[0], y + direction[1]];
+
       if (!this.validPos(newX, newY)) continue;
       const moveSpace = currentBoard[newX][newY]
   
@@ -35,7 +36,7 @@ class Marker {
         newX += direction[0];
         newY += direction[1];
 
-        if (!currentBoard[newX][newY]) {
+        if (this.validPos(newX, newY) && !currentBoard[newX][newY]) {
           moves.push([`${newX},${newY}`]);
           canJump = true;
         }

@@ -32,10 +32,12 @@ body {
 
 .Red {
   background-color: red;
+  cursor: pointer;
 }
 
 .Black {
   background-color: black;
+  cursor: pointer;
 }
 
 .move-option {
@@ -44,4 +46,5 @@ body {
 
 .highlight {
   box-shadow: 0 0 5px 5px green;
+  cursor: pointer;
 }
