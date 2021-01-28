@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Cell from '../marker/cell';
+import PlayerContext from '../context';
 
-const Board = ({ currentPlayer, boardClass }) => {
+const initialSelectedState = { cell: null, message: '' };
+
+const Board = ({ boardClass }) => {
+  const { currentPlayer, updateCurrentPlayer } = useContext(PlayerContext);
   const [board, setBoard] = useState(boardClass.board);
   const [movePieces, setMovePieces] = useState({})
-  const [selected, setSelected] = useState({ cell: null, message: ''});
+  const [selected, setSelected] = useState(initialSelectedState);
 
   useEffect(() => {
-    setMovePieces(boardClass.getMovePieces(currentPlayer));
-  }, [boardClass, currentPlayer]);
+    setMovePieces(boardClass.getMovePieces(currentPlayer, board));
+  }, [boardClass, currentPlayer, board]);
 
   function isMoveSpace(targetEl, prevPos) {
     const isHighlighted = targetEl.firstChild.classList.contains('highlight');
@@ -44,8 +48,8 @@ const Board = ({ currentPlayer, boardClass }) => {
     board[prevX][prevY] = '';
 
     setBoard([...board]);
-    setSelected({ cell: null, message: '' });
-    setMovePieces(boardClass.getMovePieces(currentPlayer));
+    setSelected(initialSelectedState);
+    updateCurrentPlayer();
   }
   
   function handleClick(e) {

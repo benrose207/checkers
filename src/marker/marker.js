@@ -37,7 +37,7 @@ class Marker {
         newY += direction[1];
 
         if (this.validPos(newX, newY) && !currentBoard[newX][newY]) {
-          moves.push([`${newX},${newY}`]);
+          moves.push(`${newX},${newY}`);
           canJump = true;
         }
       }

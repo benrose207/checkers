@@ -26,17 +26,17 @@ class Board {
     }
   }
 
-  getMovePieces(color) {
+  getMovePieces(color, board) {
     const moves = {};
     let canJump = false;
 
     // iterate through board. For each marker belonging of the color, get it's current moves.
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        const cell = this.board[i][j];
+        const cell = board[i][j];
 
         if (cell && cell.color === color) {
-          const cellMoveData = cell.canMove(this.board);
+          const cellMoveData = cell.canMove(board);
 
           if (cellMoveData.canMove) {
             const posStr = `${i},${j}`;
@@ -48,7 +48,6 @@ class Board {
         }
       }
     }
-    
     // Check if any of the markers can jump. If so, filter moves to only these tiles
     // If none can jump, then just return all moves
     if (canJump) {
