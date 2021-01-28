@@ -4,7 +4,7 @@ import PlayerContext from '../context';
 
 const initialSelectedState = { cell: null, message: '' };
 
-const Board = ({ boardClass }) => {
+const Board = ({ boardClass, updateScore }) => {
   const { currentPlayer, updateCurrentPlayer } = useContext(PlayerContext);
   const [board, setBoard] = useState(boardClass.board);
   const [movePieces, setMovePieces] = useState({})
@@ -47,10 +47,22 @@ const Board = ({ boardClass }) => {
     board[x][y] = marker;
     board[prevX][prevY] = '';
 
-    if (isJump(prevX, prevY, x, y)) handleJump(prevX, prevY, x, y);
+    const jumped = isJump(prevX, prevY, x, y);
+
+    if (jumped) handleJump(prevX, prevY, x, y);
 
     setBoard([...board]);
     setSelected(initialSelectedState);
+
+    const canJumpAgain = marker.getMoves(board).canJump;
+    if (jumped && canJumpAgain) {
+      setMovePieces(boardClass.getMovePieces(currentPlayer, board));
+      return;
+    }
+
+    if (marker.color === 'Red' && x === 7) marker.makeKing();
+    if (marker.color === 'Black' && x === 0) marker.makeKing();
+
     updateCurrentPlayer();
   }
 
@@ -62,6 +74,7 @@ const Board = ({ boardClass }) => {
     const jumpedX = (prevX + x) / 2;
     const jumpedY = (prevY + y) / 2;
     board[jumpedX][jumpedY] = '';
+    updateScore(currentPlayer);
   }
   
   function handleClick(e) {

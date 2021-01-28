@@ -28,6 +28,7 @@ body {
 .marker {
   padding: 30px;
   border-radius: 50%;
+  position: relative;
 }
 
 .Red {
@@ -47,4 +48,16 @@ body {
 .highlight {
   box-shadow: 0 0 5px 5px green;
   cursor: pointer;
+}
+
+.king::after {
+  content: "👑";
+  position: absolute;
+  font-size: 2rem;
+  top: 8px;
+  right: 14px;
+}
+
+.game-details {
+  display: flex;
 }

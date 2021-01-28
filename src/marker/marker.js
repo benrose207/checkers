@@ -5,7 +5,6 @@ class Marker {
     this.pos = pos;
   }
 
-  //make king
   makeKing() {
     this.king = true;
   }
