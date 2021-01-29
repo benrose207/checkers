@@ -2,10 +2,17 @@ import React from 'react';
 
 const GameDetails = ({ score }) => {
   return (
-    <div className="game-details">
-      <p>Red: {score.red}</p>
-      <p>Black: {score.black}</p>
-    </div>
+    <>
+      <p>Score</p>
+      <div className="game-details">
+        <div className="marker Red">
+          <span>{score.red}</span>
+        </div>
+        <div className="marker Black">
+          <span>{score.black}</span>
+        </div>
+      </div>
+    </>
   );
 };
 

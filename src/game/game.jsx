@@ -16,7 +16,7 @@ const Game = () => {
   return (
     <main>
       <GameDetails score={score} />
-      <Board boardClass={newBoard} updateScore={updateScore}/>
+      <Board boardClass={newBoard} updateScore={updateScore} score={score}/>
     </main>
   );
 };

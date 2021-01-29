@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './styles/reset.css';
 import './styles/index.css';
 import Game from './game/game.jsx';
 import PlayerContext from './context';

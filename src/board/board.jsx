@@ -4,7 +4,7 @@ import PlayerContext from '../context';
 
 const initialSelectedState = { cell: null, message: '' };
 
-const Board = ({ boardClass, updateScore }) => {
+const Board = ({ boardClass, updateScore, score }) => {
   const { currentPlayer, updateCurrentPlayer } = useContext(PlayerContext);
   const [board, setBoard] = useState(boardClass.board);
   const [movePieces, setMovePieces] = useState({})
@@ -15,13 +15,13 @@ const Board = ({ boardClass, updateScore }) => {
   }, [boardClass, currentPlayer, board]);
   
   useEffect(() => {
-    if (Object.keys(movePieces).length === 0) {
+    if (Object.keys(movePieces).length === 0 && (score.red > 0 || score.black > 0)) {
       setSelected({
         cell: null,
         message: `${currentPlayer === 'Red' ? 'Black' : 'Red'} wins!`
       })
     }
-  }, [currentPlayer, movePieces]);
+  }, [currentPlayer, movePieces, score]);
 
   function isMoveSpace(targetEl, prevPos) {
     const isHighlighted = targetEl.firstChild.classList.contains('highlight');
