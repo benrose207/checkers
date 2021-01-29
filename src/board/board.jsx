@@ -13,6 +13,15 @@ const Board = ({ boardClass, updateScore }) => {
   useEffect(() => {
     setMovePieces(boardClass.getMovePieces(currentPlayer, board));
   }, [boardClass, currentPlayer, board]);
+  
+  useEffect(() => {
+    if (Object.keys(movePieces).length === 0) {
+      setSelected({
+        cell: null,
+        message: `${currentPlayer === 'Red' ? 'Black' : 'Red'} wins!`
+      })
+    }
+  }, [currentPlayer, movePieces]);
 
   function isMoveSpace(targetEl, prevPos) {
     const isHighlighted = targetEl.firstChild.classList.contains('highlight');
@@ -106,7 +115,10 @@ const Board = ({ boardClass, updateScore }) => {
 
   return (
     <>
-      <p>{`${currentPlayer}'s turn`}</p>
+      <div className="game-message">
+        <p>{`${currentPlayer}'s turn`}</p>
+        <p>{selected.message}</p>
+      </div>
       <div className="board" onClick={handleClick}>
         {board.map((row, idx1) => (
           row.map((cell, idx2) => (
@@ -120,7 +132,6 @@ const Board = ({ boardClass, updateScore }) => {
           ))
         ))}
       </div>
-      <p>{selected.message}</p>
     </>
   );
 };

@@ -60,4 +60,14 @@ body {
 
 .game-details {
   display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.game-message {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
 }
